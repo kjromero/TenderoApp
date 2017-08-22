@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "252076422280",
+    "firebase_url": "https://tendero-cde4a.firebaseio.com",
+    "project_id": "tendero-cde4a",
+    "storage_bucket": "tendero-cde4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252076422280:android:b7eeeee9d8c0c071",
+        "android_client_info": {
+          "package_name": "com.tendero.kennyyim.tendero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252076422280-0sbco2pa7n1i6euu3tn11dv9eh8nqj8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRkBZvJJvUDw2pGOzVUgr4MEgIB-K22Nk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
