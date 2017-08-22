@@ -1,5 +1,7 @@
 package com.tendero.kennyyim.tendero.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -8,10 +10,13 @@ import java.io.Serializable;
 
 public class Solicitud implements Serializable {
 
+    @SerializedName("id")
     private String id;
 
+    @SerializedName("textSolicitud")
     private String textSolicitud;
 
+    @SerializedName("responsable")
     private String responsable;
 
 

@@ -22,7 +22,8 @@
         <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.NewProduct" />
         <activity android:name=".ui.activity.SolicitudesAdminActivity" />
-        <activity android:name=".ui.activity.RedirectActivity"></activity>
+        <activity android:name=".ui.activity.RedirectActivity" />
+        <activity android:name=".ui.activity.SolicitudDetailActivity"></activity>
     </application>
 
 </manifest>

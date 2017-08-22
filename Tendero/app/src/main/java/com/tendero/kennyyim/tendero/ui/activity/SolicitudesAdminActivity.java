@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tendero.kennyyim.tendero.MainActivity;
 import com.tendero.kennyyim.tendero.R;
+import com.tendero.kennyyim.tendero.controlls.OnItemClickListener;
 import com.tendero.kennyyim.tendero.controlls.ProductosAdapter;
 import com.tendero.kennyyim.tendero.controlls.SolicitudAdapter;
 import com.tendero.kennyyim.tendero.model.Admin;
@@ -30,7 +32,7 @@ import com.tendero.kennyyim.tendero.model.Solicitud;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolicitudesAdminActivity extends AppCompatActivity {
+public class SolicitudesAdminActivity extends AppCompatActivity implements OnItemClickListener {
 
     Toolbar toolbar;
 
@@ -39,6 +41,8 @@ public class SolicitudesAdminActivity extends AppCompatActivity {
     private RecyclerView recView;
 
     private SolicitudAdapter adaptador;
+
+    private List<Solicitud> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,21 +64,13 @@ public class SolicitudesAdminActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.i("PRODUCT",dataSnapshot.toString());
 
-                List<Solicitud> list = new ArrayList<Solicitud>();
+                list = new ArrayList<Solicitud>();
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                     list.add(child.getValue(Solicitud.class));
                 }
 
-                adaptador = new SolicitudAdapter(list);
+                setSolicitudAdapter();
 
-                adaptador.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //String myTag = (String)view.getTag();
-                        //   Toast.makeText(getActivity(),myTag,Toast.LENGTH_LONG).show();
-                    }
-                });
-                recView.setAdapter(adaptador);
             }
 
             @Override
@@ -82,6 +78,30 @@ public class SolicitudesAdminActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    private void setSolicitudAdapter(){
+        adaptador = new SolicitudAdapter(list,this);
+
+        adaptador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //String myTag = (String)view.getTag();
+                Toast.makeText(SolicitudesAdminActivity.this,String.valueOf(view.getTag()),Toast.LENGTH_LONG).show();
+            }
+        });
+        recView.setAdapter(adaptador);
+    }
+
+
+    @Override
+    public void goToSolicitudDetailActivity(int position)
+    {
+        Solicitud solicitud = list.get(position);
+        Intent intent = new Intent(SolicitudesAdminActivity.this, SolicitudDetailActivity.class);
+        intent.putExtra(SolicitudDetailActivity.INTENT_EXTRA_SOLICITUD, solicitud);
+        startActivity(intent);
     }
 
 
