@@ -15,6 +15,7 @@ import com.tendero.kennyyim.tendero.MainActivity;
 import com.tendero.kennyyim.tendero.R;
 import com.tendero.kennyyim.tendero.model.Admin;
 import com.tendero.kennyyim.tendero.model.FirebaseReferences;
+import com.tendero.kennyyim.tendero.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +25,11 @@ public class RedirectActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private DatabaseReference adminsRef;
+    private DatabaseReference userRef;
 
     FirebaseDatabase database;
 
-    private List<Admin> listAdmins;
+    private List<User> listAUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,37 +37,42 @@ public class RedirectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_redirect);
 
         database = FirebaseDatabase.getInstance();
-        adminsRef = database.getReference(FirebaseReferences.ADMIN_REFERENCE);
+        userRef = database.getReference(FirebaseReferences.USERS_REFERENCE);
 
-        adminsRef.addValueEventListener(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                listAdmins = new ArrayList<Admin>();
+                listAUsers = new ArrayList<User>();
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    listAdmins.add(child.getValue(Admin.class));
+                    listAUsers.add(child.getValue(User.class));
                 }
-
 
                 mAuth = FirebaseAuth.getInstance();
 
                 FirebaseUser user = mAuth.getCurrentUser();
 
-                boolean isAdmin = false;
 
-                for (Admin admin : listAdmins){
-                    if (admin.getEmail().equals(user.getEmail())){
-                        isAdmin = true;
-                        Intent goSolicitudes = new Intent(RedirectActivity.this, SolicitudesAdminActivity.class);
-                        startActivity(goSolicitudes);
-                        RedirectActivity.this.finish();
-                        break;
+                for (User currentUser : listAUsers){
+                    if (currentUser.getEmail().equals(user.getEmail())){
+                        if (currentUser.getRol().equals("admin")){
+                            Intent goSolicitudes = new Intent(RedirectActivity.this, SolicitudesAdminActivity.class);
+                            startActivity(goSolicitudes);
+                            RedirectActivity.this.finish();
+                            return;
+                        }
+                        if (currentUser.getRol().equals("tendero")){
+                            Intent goMAin = new Intent(RedirectActivity.this, MainActivity.class);
+                            startActivity(goMAin);
+                            RedirectActivity.this.finish();
+                            return;
+                        }
+                        if (currentUser.getRol().equals("soporte")){
+                            Intent goSoporteActivity = new Intent(RedirectActivity.this, SoporteActivity.class);
+                            startActivity(goSoporteActivity);
+                            RedirectActivity.this.finish();
+                            return;
+                        }
                     }
-                }
-
-                if (!isAdmin){
-                    Intent goMAin = new Intent(RedirectActivity.this, MainActivity.class);
-                    startActivity(goMAin);
-                    RedirectActivity.this.finish();
                 }
 
             }

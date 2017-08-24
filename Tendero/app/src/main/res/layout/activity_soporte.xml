@@ -2,21 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tendero.kennyyim.tendero.ui.activity.SolicitudesAdminActivity">
+    tools:context="com.tendero.kennyyim.tendero.ui.activity.SoporteActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_solicitudes"
+        android:id="@+id/toolbar_soporte"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ToolbarTheme" />
-
-
 
     <android.support.v7.widget.RecyclerView
         android:padding="8dp"
@@ -27,5 +25,6 @@
 
 
     </android.support.v7.widget.RecyclerView>
+
 
 </LinearLayout>

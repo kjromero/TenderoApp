@@ -19,14 +19,22 @@ public class Solicitud implements Serializable {
     @SerializedName("responsable")
     private String responsable;
 
+    @SerializedName("fechaInicio")
+    private String fechaInicio;
+
+    @SerializedName("fechaFinal")
+    private String fechaFinal;
+
 
     public Solicitud() {
     }
 
-    public Solicitud(String id, String textSolicitud, String responsable) {
+    public Solicitud(String id, String textSolicitud, String responsable, String fechaInicio, String fechaFinal) {
         this.id = id;
         this.textSolicitud = textSolicitud;
         this.responsable = responsable;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
     }
 
     public String getId() {
@@ -51,5 +59,21 @@ public class Solicitud implements Serializable {
 
     public void setResponsable(String responsable) {
         this.responsable = responsable;
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public String getFechaFinal() {
+        return fechaFinal;
+    }
+
+    public void setFechaFinal(String fechaFinal) {
+        this.fechaFinal = fechaFinal;
     }
 }

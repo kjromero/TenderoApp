@@ -10,17 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tendero.kennyyim.tendero.R;
 import com.tendero.kennyyim.tendero.model.FirebaseReferences;
 import com.tendero.kennyyim.tendero.model.Solicitud;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -29,14 +30,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class SolicitudDetailActivity extends AppCompatActivity {
+public class DetailSoporteActivity extends AppCompatActivity {
 
     final public static String INTENT_EXTRA_SOLICITUD = "SLT_DETAIL";
 
     Toolbar toolbar;
 
     private Button btnAsignar;
-    private EditText edtEmail;
     private TextView txtAsignado;
 
     private String correo;
@@ -48,24 +48,34 @@ public class SolicitudDetailActivity extends AppCompatActivity {
 
     DatabaseReference refSolicitudes;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solicitud_detail);
+        setContentView(R.layout.activity_detail_soporte);
+
+        mAuth = FirebaseAuth.getInstance();
 
         database = FirebaseDatabase.getInstance();
         refSolicitudes = database.getReference(FirebaseReferences.SOLICITUDES_REFERENCE);
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_solicitud_detail);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_soporte_detail);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final Solicitud solicitud = (Solicitud)getIntent().getSerializableExtra(INTENT_EXTRA_SOLICITUD);
 
-        btnAsignar = (Button)findViewById(R.id.btn_asignar);
-        edtEmail = (EditText)findViewById(R.id.txt_email_solicitud);
+        btnAsignar = (Button)findViewById(R.id.btn_finalizar);
         txtAsignado = (TextView)findViewById(R.id.txt_asginado);
+        TextView txtFInicio= (TextView)findViewById(R.id.txt_fecha_inicio);
+        TextView txtFFin = (TextView)findViewById(R.id.txt_fecha_fin);
+
+        txtFFin.setText(solicitud.getFechaFinal());
+        txtFInicio.setText(solicitud.getFechaInicio());
+
+        txtAsignado.setText(solicitud.getResponsable());
 
         correo = "sastoque.kenny@gmail.com";
         contrasena = "kenny123456";
@@ -99,18 +109,19 @@ public class SolicitudDetailActivity extends AppCompatActivity {
 
                         Message message = new MimeMessage(session);
                         message.setFrom(new InternetAddress(correo));
-                        message.setSubject("Asignacion Solicitud");
-                        message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(edtEmail.getText().toString()));
+                        message.setSubject("Solicitud Finalizada ");
+                        message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(mAuth.getCurrentUser().getEmail()));
                         message.setRecipients(Message.RecipientType.CC,InternetAddress.parse(correo));
 
-                        message.setContent("Se le ha asignado la siguiente solicitud :"+solicitud.getTextSolicitud(),"text/html; charset=utf-8");
+                        message.setContent("Usted ha registrado como finalizada la solicitud :"+solicitud.getTextSolicitud(),"text/html; charset=utf-8");
                         Transport.send(message);
 
+                        SimpleDateFormat postFormater = new SimpleDateFormat("MMMM dd, yyyy");
+                        Date currentTime = Calendar.getInstance().getTime();
+                        solicitud.setFechaFinal(postFormater.format(currentTime));
 
-
-                        Solicitud newSolicitud = new Solicitud(solicitud.getId(),solicitud.getTextSolicitud(),edtEmail.getText().toString(),solicitud.getFechaInicio(),solicitud.getFechaFinal());
-                        refSolicitudes.child(solicitud.getId()).setValue(newSolicitud);
-                        SolicitudDetailActivity.this.finish();
+                        refSolicitudes.child(solicitud.getId()).setValue(solicitud);
+                        DetailSoporteActivity.this.finish();
 
 
                     }
@@ -122,8 +133,6 @@ public class SolicitudDetailActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     @Override
@@ -132,7 +141,7 @@ public class SolicitudDetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 // todo: goto back activity from here
 
-                SolicitudDetailActivity.this.finish();
+                DetailSoporteActivity.this.finish();
                 return true;
 
             default:

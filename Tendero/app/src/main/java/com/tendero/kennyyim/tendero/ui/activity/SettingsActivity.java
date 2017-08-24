@@ -18,6 +18,10 @@ import com.tendero.kennyyim.tendero.model.FirebaseReferences;
 import com.tendero.kennyyim.tendero.model.Solicitud;
 import com.tendero.kennyyim.tendero.utils.RandomString;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class SettingsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -50,7 +54,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 RandomString randomString = new RandomString();
                 String id= randomString.nextString();
-                Solicitud solicitud = new Solicitud(id,editText.getText().toString(),null);
+                SimpleDateFormat postFormater = new SimpleDateFormat("MMMM dd, yyyy");
+                Date currentTime = Calendar.getInstance().getTime();
+                Solicitud solicitud = new Solicitud(id,editText.getText().toString(),"",postFormater.format(currentTime) ,"");
 
                 refSolicitudes.child(id).setValue(solicitud);
                 SettingsActivity.this.finish();

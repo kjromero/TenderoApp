@@ -66,6 +66,9 @@ public class SolicitudAdapter extends RecyclerView.Adapter<SolicitudAdapter.Soli
             extends RecyclerView.ViewHolder {
 
         private TextView txtSolicitud;
+        private TextView txtResponsable;
+        private TextView txtFechaInicio;
+        private TextView txtFechaFin;
         private LinearLayout lContent;
 
         OnItemClickListener listener;
@@ -74,13 +77,26 @@ public class SolicitudAdapter extends RecyclerView.Adapter<SolicitudAdapter.Soli
             super(itemView);
 
             this.listener = listener;
+            txtResponsable = (TextView)itemView.findViewById(R.id.txt_responsable);
             txtSolicitud = (TextView)itemView.findViewById(R.id.txt_solicitud);
             lContent = (LinearLayout)itemView.findViewById(R.id.content_solicitud);
+            txtFechaInicio = (TextView)itemView.findViewById(R.id.txt_recha_inicio);
+            txtFechaFin = (TextView)itemView.findViewById(R.id.txt_recha_fin);
+
         }
 
         public void bindTitular(Solicitud t, final int position) {
             txtSolicitud.setText(t.getTextSolicitud());
             txtSolicitud.setTag(position);
+            txtFechaInicio.setText("Fecha Creacion Solicitud : " +t.getFechaInicio());
+            txtFechaFin.setText("Fecha Finalizacion Solicitud :" +t.getFechaFinal());
+
+            if (t.getResponsable() !=null && !t.getResponsable().equals("")){
+                txtResponsable.setText(t.getResponsable());
+            }else{
+                txtResponsable.setText("Sin Asignar");
+            }
+
             lContent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

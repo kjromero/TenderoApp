@@ -33,7 +33,8 @@ public class NewProduct extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
        final  DatabaseReference myRef = database.getReference(FirebaseReferences.PRODUCTOS_REFERENCE);
 
-        final RandomString randomString = new RandomString();
+        final String idProducto = new RandomString().nextString();
+
 
         final EditText edtName = (EditText)findViewById(R.id.edt_name_product);
         final EditText edtCantidad = (EditText)findViewById(R.id.edt_cantidad);
@@ -44,8 +45,8 @@ public class NewProduct extends AppCompatActivity {
         btnNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Producto newProducto = new Producto(randomString.nextString(),edtName.getText().toString(),Integer.parseInt(edtCantidad.getText().toString()),Double.parseDouble(edtValor.getText().toString()));
-                myRef.child(randomString.nextString()).setValue(newProducto);
+                Producto newProducto = new Producto(idProducto,edtName.getText().toString(),Integer.parseInt(edtCantidad.getText().toString()),Double.parseDouble(edtValor.getText().toString()));
+                myRef.child(idProducto).setValue(newProducto);
                 NewProduct.this.finish();
             }
         });

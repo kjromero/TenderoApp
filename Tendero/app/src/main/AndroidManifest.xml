@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tendero.kennyyim.tendero">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +27,21 @@
         <activity android:name=".ui.activity.NewProduct" />
         <activity android:name=".ui.activity.SolicitudesAdminActivity" />
         <activity android:name=".ui.activity.RedirectActivity" />
-        <activity android:name=".ui.activity.SolicitudDetailActivity"></activity>
+        <activity android:name=".ui.activity.SolicitudDetailActivity" />
+        <activity android:name=".ui.activity.SoporteActivity" />
+        <activity android:name=".ui.activity.DetailSoporteActivity" />
+
+        <provider
+            android:name=".GenericFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity android:name=".ui.activity.ProductoDetailActivity"></activity>
     </application>
 
 </manifest>

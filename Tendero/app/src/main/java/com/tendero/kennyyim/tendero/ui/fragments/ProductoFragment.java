@@ -24,10 +24,15 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.tendero.kennyyim.tendero.MainActivity;
 import com.tendero.kennyyim.tendero.R;
+import com.tendero.kennyyim.tendero.controlls.OnItemClickListener;
 import com.tendero.kennyyim.tendero.controlls.ProductosAdapter;
 import com.tendero.kennyyim.tendero.model.FirebaseReferences;
 import com.tendero.kennyyim.tendero.model.Producto;
+import com.tendero.kennyyim.tendero.model.Solicitud;
 import com.tendero.kennyyim.tendero.ui.activity.NewProduct;
+import com.tendero.kennyyim.tendero.ui.activity.ProductoDetailActivity;
+import com.tendero.kennyyim.tendero.ui.activity.SolicitudDetailActivity;
+import com.tendero.kennyyim.tendero.ui.activity.SolicitudesAdminActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,13 +40,15 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ProductoFragment extends Fragment {
+public class ProductoFragment extends Fragment  implements OnItemClickListener {
 
     FirebaseDatabase database;
 
     private RecyclerView recView;
 
     private ArrayList<Producto> datos;
+
+    List<Producto> list;
 
     private ProductosAdapter adaptador;
 
@@ -76,12 +83,12 @@ public class ProductoFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.i("PRODUCT",dataSnapshot.toString());
 
-                List<Producto> list = new ArrayList<Producto>();
+                list = new ArrayList<Producto>();
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                     list.add(child.getValue(Producto.class));
                 }
 
-               adaptador = new ProductosAdapter(list);
+               adaptador = new ProductosAdapter(list,ProductoFragment.this);
 
                 adaptador.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -102,4 +109,11 @@ public class ProductoFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void goToSolicitudDetailActivity(int position) {
+        Producto producto = list.get(position);
+        Intent intent = new Intent(getActivity(), ProductoDetailActivity.class);
+        intent.putExtra(ProductoDetailActivity.INTENT_EXTRA_PRODUCTO, producto);
+        startActivity(intent);
+    }
 }

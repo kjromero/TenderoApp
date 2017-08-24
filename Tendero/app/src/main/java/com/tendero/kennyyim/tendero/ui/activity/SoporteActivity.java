@@ -1,7 +1,6 @@
 package com.tendero.kennyyim.tendero.ui.activity;
 
 import android.content.Intent;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -27,8 +26,7 @@ import com.tendero.kennyyim.tendero.model.Solicitud;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class SolicitudesAdminActivity extends AppCompatActivity implements OnItemClickListener {
+public class SoporteActivity extends AppCompatActivity implements OnItemClickListener {
 
     Toolbar toolbar;
 
@@ -40,33 +38,40 @@ public class SolicitudesAdminActivity extends AppCompatActivity implements OnIte
 
     private List<Solicitud> list;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solicitudes_admin);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_solicitudes);
+        setContentView(R.layout.activity_soporte);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar_soporte);
+        toolbar.setTitle("Mis Solicitudes");
         setSupportActionBar(toolbar);
 
         database = FirebaseDatabase.getInstance();
         DatabaseReference solicitudesRef = database.getReference(FirebaseReferences.SOLICITUDES_REFERENCE);
 
-                recView = (RecyclerView)findViewById(R.id.rec_view_solicitudes);
+        recView = (RecyclerView) findViewById(R.id.rec_view_solicitudes);
         recView.setHasFixedSize(true);
         recView.setLayoutManager(
-                new LinearLayoutManager(SolicitudesAdminActivity.this,LinearLayoutManager.VERTICAL,false));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(SolicitudesAdminActivity.this,LinearLayoutManager.VERTICAL);
+                new LinearLayoutManager(SoporteActivity.this, LinearLayoutManager.VERTICAL, false));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(SoporteActivity.this, LinearLayoutManager.VERTICAL);
         recView.addItemDecoration(dividerItemDecoration);
 
         solicitudesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("PRODUCT",dataSnapshot.toString());
-
+                Log.i("PRODUCT", dataSnapshot.toString());
                 list = new ArrayList<Solicitud>();
-                for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    list.add(child.getValue(Solicitud.class));
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Solicitud currentSolicitu = child.getValue(Solicitud.class);
+                    if (currentSolicitu.getResponsable().equals(mAuth.getCurrentUser().getEmail())){
+                        list.add(child.getValue(Solicitud.class));
+                    }
                 }
-
                 setSolicitudAdapter();
 
             }
@@ -79,18 +84,17 @@ public class SolicitudesAdminActivity extends AppCompatActivity implements OnIte
     }
 
 
-    private void setSolicitudAdapter(){
-        adaptador = new SolicitudAdapter(list,this);
+    private void setSolicitudAdapter() {
+        adaptador = new SolicitudAdapter(list, this);
 
         recView.setAdapter(adaptador);
     }
 
 
     @Override
-    public void goToSolicitudDetailActivity(int position)
-    {
+    public void goToSolicitudDetailActivity(int position) {
         Solicitud solicitud = list.get(position);
-        Intent intent = new Intent(SolicitudesAdminActivity.this, SolicitudDetailActivity.class);
+        Intent intent = new Intent(SoporteActivity.this, DetailSoporteActivity.class);
         intent.putExtra(SolicitudDetailActivity.INTENT_EXTRA_SOLICITUD, solicitud);
         startActivity(intent);
     }
@@ -99,7 +103,7 @@ public class SolicitudesAdminActivity extends AppCompatActivity implements OnIte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.login_menu, menu);
-        return  true;
+        return true;
     }
 
     @Override
@@ -107,9 +111,9 @@ public class SolicitudesAdminActivity extends AppCompatActivity implements OnIte
         switch (item.getItemId()) {
             case R.id.options:
                 FirebaseAuth.getInstance().signOut();
-                Intent goLogin = new Intent(SolicitudesAdminActivity.this, LoginActivity.class);
+                Intent goLogin = new Intent(SoporteActivity.this, LoginActivity.class);
                 startActivity(goLogin);
-                SolicitudesAdminActivity.this.finish();
+                SoporteActivity.this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

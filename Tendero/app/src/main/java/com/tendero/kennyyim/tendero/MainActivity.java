@@ -1,9 +1,11 @@
 package com.tendero.kennyyim.tendero;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tendero.kennyyim.tendero.ui.activity.LoginActivity;
 import com.tendero.kennyyim.tendero.ui.activity.SettingsActivity;
+import com.tendero.kennyyim.tendero.ui.fragments.PdfFragment;
 import com.tendero.kennyyim.tendero.ui.fragments.ProductoFragment;
 import com.tendero.kennyyim.tendero.ui.fragments.StarredFragment;
 
@@ -107,7 +110,8 @@ public class MainActivity extends AppCompatActivity  {
                                 return true;
                             case R.id.item_navigation_drawer_drafts:
                                 menuItem.setChecked(true);
-                                Toast.makeText(MainActivity.this, "Launching " + menuItem.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                                setFragment(2);
+                               // Toast.makeText(MainActivity.this, "Launching " + menuItem.getTitle().toString(), Toast.LENGTH_SHORT).show();
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.item_navigation_drawer_settings:
@@ -141,9 +145,15 @@ public class MainActivity extends AppCompatActivity  {
                 fragmentTransaction.replace(R.id.fragment, starredFragment);
                 fragmentTransaction.commit();
                 break;
+            case 2:
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                PdfFragment pdfFragment = new PdfFragment();
+                fragmentTransaction.replace(R.id.fragment, pdfFragment);
+                fragmentTransaction.commit();
+                break;
         }
     }
-
 
 
 

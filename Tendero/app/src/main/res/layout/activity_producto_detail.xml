@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.tendero.kennyyim.tendero.ui.activity.ProductoDetailActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_producto_detail"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ToolbarTheme" />
+
+    <LinearLayout
+        android:padding="25dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_nombre_producto"
+            android:hint="Nombre producto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_cantidad_producto"
+            android:hint="Cantidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_valor_producto"
+            android:hint="Valor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+        <Button
+            android:textAllCaps="false"
+            android:textColor="@color/md_white_1000"
+            android:text="Editar"
+            android:background="@color/colorAccent"
+            android:id="@+id/btn_editar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"/>
+
+        <Button
+            android:textColor="@color/md_white_1000"
+            android:text="Eliminar"
+            android:background="@color/md_red_A100"
+            android:layout_marginTop="15dp"
+            android:id="@+id/btn_eliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

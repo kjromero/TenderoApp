@@ -14,7 +14,7 @@
             android:title="Sent mail" />
         <item
             android:id="@+id/item_navigation_drawer_drafts"
-            android:title="Drafts" />
+            android:title="Generar Reporte " />
     </group>
 
     <item android:title="Solicitar soporte">
