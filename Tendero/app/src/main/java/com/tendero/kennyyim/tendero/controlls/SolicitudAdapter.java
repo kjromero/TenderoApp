@@ -11,6 +11,8 @@ import com.tendero.kennyyim.tendero.R;
 import com.tendero.kennyyim.tendero.model.Producto;
 import com.tendero.kennyyim.tendero.model.Solicitud;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -69,6 +71,8 @@ public class SolicitudAdapter extends RecyclerView.Adapter<SolicitudAdapter.Soli
         private TextView txtResponsable;
         private TextView txtFechaInicio;
         private TextView txtFechaFin;
+        private TextView txtEstado;
+        private TextView txtCommentSoporte;
         private LinearLayout lContent;
 
         OnItemClickListener listener;
@@ -82,6 +86,8 @@ public class SolicitudAdapter extends RecyclerView.Adapter<SolicitudAdapter.Soli
             lContent = (LinearLayout)itemView.findViewById(R.id.content_solicitud);
             txtFechaInicio = (TextView)itemView.findViewById(R.id.txt_recha_inicio);
             txtFechaFin = (TextView)itemView.findViewById(R.id.txt_recha_fin);
+            txtEstado = (TextView)itemView.findViewById(R.id.txt_estado);
+            txtCommentSoporte =(TextView)itemView.findViewById(R.id.txt_commetn_soporte);
 
         }
 
@@ -90,6 +96,8 @@ public class SolicitudAdapter extends RecyclerView.Adapter<SolicitudAdapter.Soli
             txtSolicitud.setTag(position);
             txtFechaInicio.setText("Fecha Creacion Solicitud : " +t.getFechaInicio());
             txtFechaFin.setText("Fecha Finalizacion Solicitud :" +t.getFechaFinal());
+            txtCommentSoporte.setText(t.getComentarioSoporte());
+            txtEstado.setText(t.getEstado());
 
             if (t.getResponsable() !=null && !t.getResponsable().equals("")){
                 txtResponsable.setText(t.getResponsable());

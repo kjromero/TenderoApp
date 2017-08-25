@@ -38,6 +38,8 @@ public class DetailSoporteActivity extends AppCompatActivity {
 
     private Button btnAsignar;
     private TextView txtAsignado;
+    private EditText edtCommentSolicitud;
+
 
     private String correo;
     private String contrasena;
@@ -71,6 +73,7 @@ public class DetailSoporteActivity extends AppCompatActivity {
         txtAsignado = (TextView)findViewById(R.id.txt_asginado);
         TextView txtFInicio= (TextView)findViewById(R.id.txt_fecha_inicio);
         TextView txtFFin = (TextView)findViewById(R.id.txt_fecha_fin);
+        edtCommentSolicitud = (EditText)findViewById(R.id.edt_comment);
 
         txtFFin.setText(solicitud.getFechaFinal());
         txtFInicio.setText(solicitud.getFechaInicio());
@@ -119,6 +122,8 @@ public class DetailSoporteActivity extends AppCompatActivity {
                         SimpleDateFormat postFormater = new SimpleDateFormat("MMMM dd, yyyy");
                         Date currentTime = Calendar.getInstance().getTime();
                         solicitud.setFechaFinal(postFormater.format(currentTime));
+                        solicitud.setComentarioSoporte(edtCommentSolicitud.getText().toString());
+                        solicitud.setEstado("Finalizada");
 
                         refSolicitudes.child(solicitud.getId()).setValue(solicitud);
                         DetailSoporteActivity.this.finish();

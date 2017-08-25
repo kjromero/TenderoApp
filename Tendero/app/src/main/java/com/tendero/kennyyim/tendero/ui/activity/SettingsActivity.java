@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
                 String id= randomString.nextString();
                 SimpleDateFormat postFormater = new SimpleDateFormat("MMMM dd, yyyy");
                 Date currentTime = Calendar.getInstance().getTime();
-                Solicitud solicitud = new Solicitud(id,editText.getText().toString(),"",postFormater.format(currentTime) ,"");
+                Solicitud solicitud = new Solicitud(id,editText.getText().toString(),"",postFormater.format(currentTime) ,"","Sin asignar","");
 
                 refSolicitudes.child(id).setValue(solicitud);
                 SettingsActivity.this.finish();

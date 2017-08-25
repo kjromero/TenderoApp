@@ -108,7 +108,7 @@ public class SolicitudDetailActivity extends AppCompatActivity {
 
 
 
-                        Solicitud newSolicitud = new Solicitud(solicitud.getId(),solicitud.getTextSolicitud(),edtEmail.getText().toString(),solicitud.getFechaInicio(),solicitud.getFechaFinal());
+                        Solicitud newSolicitud = new Solicitud(solicitud.getId(),solicitud.getTextSolicitud(),edtEmail.getText().toString(),solicitud.getFechaInicio(),solicitud.getFechaFinal(),"asignada","");
                         refSolicitudes.child(solicitud.getId()).setValue(newSolicitud);
                         SolicitudDetailActivity.this.finish();
 

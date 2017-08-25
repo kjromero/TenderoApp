@@ -196,7 +196,6 @@ public class PdfFragment extends Fragment {
 
         //Step 4 Add content
         document.add(catPart);
-        //document.add(new Paragraph("LOOOOOOOOOOOOOOOOOOOOO"));
 
         //Step 5: Close the document
         document.close();
@@ -214,11 +213,7 @@ public class PdfFragment extends Fragment {
         // t.setSpacing(4);
         // t.setBorderWidth(1);
 
-        PdfPCell c1 = new PdfPCell(new Phrase("Id solicitud"));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-
-        c1 = new PdfPCell(new Phrase("Solicitud  "));
+        PdfPCell c1 = new PdfPCell(new Phrase("Solicitud  "));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
 
@@ -232,6 +227,14 @@ public class PdfFragment extends Fragment {
 
         c1 = new PdfPCell(new Phrase("Fecha Finalizacion"));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Estado"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(c1);
+
+        c1 = new PdfPCell(new Phrase("Comentario Soporte"));
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 
         table.addCell(c1);
         table.setHeaderRows(1);
@@ -242,6 +245,8 @@ public class PdfFragment extends Fragment {
             table.addCell(solicitud.getFechaInicio());
             table.addCell(solicitud.getResponsable());
             table.addCell(solicitud.getFechaFinal());
+            table.addCell(solicitud.getEstado());
+            table.addCell(solicitud.getComentarioSoporte());
         }
 
         subCatPart.add(table);
